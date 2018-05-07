@@ -17,4 +17,9 @@
     return trim($var);
   }
 
+  function safehtml ($var) {
+    $var = htmlspecialchars($var);
+    return trim($var);
+  }
+
 ?>
