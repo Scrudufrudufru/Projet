@@ -1,0 +1,26 @@
+body {
+  font-family: "Arial-black", sans-serif;
+  font-weight: lighter;
+  margin: 25px;
+  width : 80%;
+  t
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color : black;
+
+}
+
+a:hover {
+  color : lightgray;
+}
+
+#contenu div {
+  width : 60%;
+  float : left;
+}
