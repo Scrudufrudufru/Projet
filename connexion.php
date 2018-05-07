@@ -6,9 +6,8 @@ function login($co) {
   $res = mysqli_query($co, $req);
   $x;
   if ($res) {
-    while ($ligne = mysqli_fetch_assoc($res)) {
-      $x = $ligne['password'];
-    }
+    $ligne = mysqli_fetch_assoc($res);
+    $x = $ligne['password'];
   }
   if (password_verify($_POST['password'], $x)) {
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
@@ -52,7 +51,7 @@ if (isset($_POST['username'], $_POST['password'])) {
       <?php
       if (isset($_SESSION['username'])) echo '<p>Vous &ecirc;tes connect&eacute; !<br><a href=main.php>Retour &agrave; l\'accueil</a></p>';
       else echo '
-      <form action="main.php?page=connexion" method="post">
+      <form action="connexion.php" method="post">
       Identifiant<br>
       <input type="text" name="username"><br>
       Mot de passe<br>

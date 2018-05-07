@@ -25,7 +25,9 @@
     </tr></table>
     </div>
     <hr>
+
     <div id="contenu">
+
       <?php
       if (!isset($_GET["page"])) {
         require_once("article.php");
@@ -34,12 +36,22 @@
       if ($_GET["page"] == "creation") {
         require_once("creation.php");
       }
+      if ($_GET["page"] == "inscription") {
+        require_once("inscription.php");
+      }
           ?>
     </div>
 
     <div id="login">
       <?php
-        if ($_GET["page"] == "connexion"){}
+        if (isset($_SESSION["username"])) {
+          $req = "SELECT nom, prenom FROM users WHERE username = ".$_SESSION["username"].";";
+          $res = mysqli_query($co,$req);
+          $ligne = mysqli_fetch_assoc($res);
+          echo ("Bonjour ".$ligne["prenom"].".<br><a href=\"main.php?page=profil\">Profil</a><br><a href=\"main.php?page=creation\">Créer un article</a>");
+        } else {
+          echo('<a href="connexion.php">Connection</a><br><a href="main.php?page=inscription">Inscription</a>');
+        }
       ?>
     </div>
 

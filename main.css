@@ -3,7 +3,7 @@ body {
   font-weight: lighter;
   margin: 25px;
   width : 80%;
-  t
+
 }
 
 h1 {
@@ -17,15 +17,25 @@ a {
 }
 
 a:hover {
-  color : lightgray;
+  color : gray;
+}
+
+#categories table {
+  width: 100%;
 }
 
 #login {
-  width: 250px;
-  float: right;
+  margin: 20px;
+  float:right;
 }
 
 #contenu {
-  width : 80%;
+  width : inherit;
+  min-height: 500px; 
   float : left;
+  border-style: solid;
+  border-color: lightgray;
+  border-width: thin;
+  padding: 10px;
+  margin: 30px;
 }
