@@ -11,7 +11,7 @@
   function listearticle ($res){ //Affiche une liste des articles de la requete sql
     $ligne = mysqli_fetch_assoc($res);
     while($ligne = mysqli_fetch_assoc($res)) {
-      affichearticle($ligne["titre"],$ligne["nom"],$ligne["prenom"],$ligne["timecreation"],$ligne["catnom"],$ligne["texte"]);
+      affichearticle(safehtml($ligne["titre"]),safehtml($ligne["nom"]),safehtml($ligne["prenom"]),safehtml($ligne["timecreation"]),safehtml($ligne["catnom"]),safehtml($ligne["texte"]));
     }
   }
 
@@ -21,6 +21,4 @@
     return $var;
   }
 
-  affichearticle("titre","Bauer","David","2018","Actulaité","HRLLOWWORLD");
-  echo (requeteCat("2"));
 ?>
