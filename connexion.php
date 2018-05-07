@@ -2,7 +2,7 @@
 session_start();
 include 'projet/connect.php';
 function login($co) {
-  $req = 'select nickname, password from users where nickname=\''.$_POST['nickname'].'\'';
+  $req = 'select username, password from users where username=\''.$_POST['username'].'\'';
   $res = mysqli_query($co, $req);
   $x;
   if ($res) {
@@ -11,7 +11,7 @@ function login($co) {
     }
   }
   if (password_verify($_POST['password'], $x)) {
-    $_SESSION['nickname'] = htmlspecialchars($_POST['nickname']);
+    $_SESSION['username'] = htmlspecialchars($_POST['username']);
     header('Location: index.php?page=compte');
     exit();
   } else {
@@ -19,7 +19,7 @@ function login($co) {
   }
 }
 
-if (isset($_POST['nickname'], $_POST['password'])) {
+if (isset($_POST['username'], $_POST['password'])) {
   login(connect());
   header('Location: ' . $_SERVER['REQUEST_URI']);
   exit();
@@ -50,11 +50,11 @@ if (isset($_POST['nickname'], $_POST['password'])) {
     <div id='maincontent'>
       <h2>Connexion</h2>
       <?php
-      if (isset($_SESSION['nickname'])) echo '<p>Vous &ecirc;tes connect&eacute; !<br><a href=main.php>Retour &agrave; l\'accueil</a></p>';
+      if (isset($_SESSION['username'])) echo '<p>Vous &ecirc;tes connect&eacute; !<br><a href=main.php>Retour &agrave; l\'accueil</a></p>';
       else echo '
       <form action="main.php?page=connexion" method="post">
       Identifiant<br>
-      <input type="text" name="nickname"><br>
+      <input type="text" name="username"><br>
       Mot de passe<br>
       <input type="password" name="password"><br><br>
       <input type="submit" value="Valider">
