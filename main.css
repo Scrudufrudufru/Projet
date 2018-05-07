@@ -20,7 +20,12 @@ a:hover {
   color : lightgray;
 }
 
-#contenu div {
-  width : 60%;
+#login {
+  width: 250px;
+  float: right;
+}
+
+#contenu {
+  width : 80%;
   float : left;
 }

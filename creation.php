@@ -16,20 +16,20 @@
 }) </script>
 <?php
   require_once("./connect.php");
-
+  echo ("<p>Création d'un nouvel article</p>");
   //Traitement du formulaire
-  if (isset($_POST["titre"]) && isset($_POST["cat"]) && isset($_POST["text"]) && !empty($_POST["titre"]) && !empty($_POST["cat"]) && !empty($_POST["text"]) && $_POST["text"] == "<p>Hello,+World!</p>") {
-    $titre = safeDB($_POST["titre"]);
-    $cat = safeDB($_POST["cat"]);
-    $text = safeDB($_POST["text"]);
+  if (isset($_POST["titre"]) && isset($_POST["cat"]) && isset($_POST["text"]) && !empty($_POST["titre"]) && !empty($_POST["cat"]) && !empty($_POST["text"]) && ($_POST["text"] != "<p>Hello,+World!</p>") && $_POST["titre"] != "Titre") {
+    $titre = safeDB($co, $_POST["titre"]);
+    $cat = safeDB($co, $_POST["cat"]);
+    $text = safeDB($co, $_POST["text"]);
     //$req = "INSERT INTO articles (user,cat,titre,timecreation,texte) VALUES (/*userid*/,$cat,$titre,$text,date("Y-m-d H:i:s"))";
     //mysqli_query($co,$req);
-    echo ("Article enregistré et en attente de validation");
+    echo ("Article enregistré et en attente de validation"); //Ajouter un preview de l'article
   } else { // Si tous les inputs ne sont pas remplis on affiche le formulaire en gardant les cases deja remplis
     //formulaire : case titre
-    echo("<form method=\"POST\" action=\"creation.php\"> Titre :");
-    if (isset($_POST["titre"]) && !empty($_POST["titre"])) echo ("<input type=\"text\" name=\"titre\" value=\"".safehtml($_POST["titre"])."\"><br>");
-    else echo("<input type=\"text\" name=\"titre\" required><br>");
+    echo("<form method=\"POST\" action=\"main.php?page=creation\"> Titre :");
+    if (isset($_POST["titre"]) && !empty($_POST["titre"]) && $_POST["titre"] != "Titre") echo ("<input type=\"text\" name=\"titre\" value=\"".safehtml($_POST["titre"])."\"><br>");
+    else echo("<input type=\"text\" name=\"titre\" value=\"Titre\" required><br>");
 
     //Choix de la categorie
     echo("<select name=\"cat\">");
@@ -40,12 +40,12 @@
         if (isset($_POST["cat"]) && $ligne["catid"] == $_POST["cat"]) echo("selected"); // ajoute l'attribut selected sur la categorie choissie
         echo(">".safehtml($ligne["catnom"])."</option>");
     }
-    echo("</select>");
+    echo("</select><br><br>");
 
     //editeur
     if (isset($_POST["text"]) && !empty($_POST["text"]) && $_POST["text"] != "<p>Hello,+World!</p>") echo ("<textarea id=\"mytextarea\" name=\"text\">".safehtml($_POST["text"])."</textarea>");
     else echo ("<textarea id=\"mytextarea\" name=\"text\">Hello, World!</textarea>");
 
-    echo("<input type=\"submit\">");
+    echo("<br><input type=\"submit\">");
   }
 ?>

@@ -5,7 +5,7 @@
   $co = mysqli_connect("localhost",$login,$mdp,$base);
   if (!$co) {
     echo("Echec de la connexion : ".mysqli_connect_error($co));
-  } else echo ("Connexion reussie");
+  }
 
   function close ($co) {
     mysqli_close($co);
