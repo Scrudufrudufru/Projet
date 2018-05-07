@@ -33,8 +33,8 @@ if (isset($_POST['nickname'], $_POST['password'])) {
 <head>
 
   <meta charset="utf-8">
-  <title>Connexion&nbsp;-&nbsp;Benalia.fr</title>
-  <link rel="stylesheet" href="Style/global_style.css">
+  <title>Connexion&nbsp;-&nbsp;fghfgh.fr</title>
+  <link rel="stylesheet" href="main.css">
 
 </head>
 
