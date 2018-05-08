@@ -16,30 +16,44 @@
 }) </script>
 <?php
   require_once("./connect.php");
-  echo ("<p>Création d'un nouvel article</p>");
+  echo ("<h2>Création d'un nouvel article</h2>");
   //Traitement du formulaire
-  if (isset($_POST["titre"]) && isset($_POST["cat"]) && isset($_POST["text"]) && !empty($_POST["titre"]) && !empty($_POST["cat"]) && !empty($_POST["text"]) && ($_POST["text"] != "<p>Hello,+World!</p>") && $_POST["titre"] != "Titre") {
-    $titre = safeDB($co, $_POST["titre"]);
-    $cat = safeDB($co, $_POST["cat"]);
-    $text = safeDB($co, $_POST["text"]);
+  if (isset($_POST["titre"]) && isset($_POST["cat"]) && isset($_POST["text"]) &&
+  !empty($_POST["titre"]) && !empty($_POST["cat"]) && !empty($_POST["text"]) &&
+  ($_POST["text"] != "<p>Hello,+World!</p>") && $_POST["titre"] != "Titre" && isset($_POST["resume"]) && !empty($_POST["resume"])) {
 
+    //recuperation de l'id de lutilisateur
     $req = "SELECT userid FROM users WHERE username=\"".$_SESSION["username"]."\"";
     $res = mysqli_query($co,$req);
+      if (!$res) {
+        echo ("Vous n'êtes pas connecté.");
+        exit();
+      }
     $ligne = mysqli_fetch_assoc($res);
     $userid = $ligne["userid"];
 
-    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte) VALUES (\"".$userid."\",\"".$cat."\",\"".$titre."\",\"".date("Y-m-d H:i:s")."\",\"".$text."\")";
+    //Traitement des données
+    $titre = safeDB($co, $_POST["titre"]);
+    $cat = safeDB($co, $_POST["cat"]);
+    $text = safeDB($co, $_POST["text"]);
+    $resume = safeDB($co, $_POST["resume"]);
+
+    //Insertion des données dans la DB
+    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume)
+      VALUES (\"".$userid."\",\"".$cat."\",\"".$titre."\",\"".date("Y-m-d H:i:s")."\",\"".$text."\",\"".$resume."\")";
     mysqli_query($co,$req);
     echo ("Article enregistré et en attente de validation"); //Ajouter un preview de l'article
   } else { // Si tous les inputs ne sont pas remplis on affiche le formulaire en gardant les cases deja remplis
+
+    echo("<form method=\"POST\" action=\"main.php?page=creation\">");
     //formulaire : case titre
-    if (isset($_POST["titre"]) || isset($_POST["text"])) echo ("Vous n'avez pas correctement rempli le formulaire");
-    echo("<form method=\"POST\" action=\"main.php?page=creation\"> Titre :");
-    if (isset($_POST["titre"]) && !empty($_POST["titre"]) && $_POST["titre"] != "Titre") echo ("<input type=\"text\" name=\"titre\" value=\"".safehtml($_POST["titre"])."\"><br>");
-    else echo("<input type=\"text\" name=\"titre\" value=\"Titre\" required><br>");
+    echo("Titre de l'article<br>");
+    if (isset($_POST["titre"]) || isset($_POST["text"])) echo ("Vous n'avez pas correctement rempli le formulaire"); //Si le formulaire a été mal rempli
+    if (isset($_POST["titre"]) && !empty($_POST["titre"]) && $_POST["titre"] != "Titre") echo ("<input type=\"text\" size=\"40\" name=\"titre\" value=\"".safehtml($_POST["titre"])."\"><br>");
+    else echo("<input type=\"text\" name=\"titre\" size=\"40\" value=\"Titre\" required><br>");
 
     //Choix de la categorie
-    echo("<select name=\"cat\">");
+    echo("Catégorie<br><select name=\"cat\">");
     $req = "SELECT * FROM categorie ORDER BY catid;"; //requete pour les categories
     $res = mysqli_query($co, $req);
     while ($ligne = mysqli_fetch_assoc($res)) { //parcours la liste des categoires en les affichants
@@ -49,6 +63,10 @@
     }
     echo("</select><br><br>");
 
+    //Case resume/courte description
+    echo("Description courte du contenu de l'article:<br><textarea name=\"resume\" rows=\"4\" cols=\"50\">");
+    if (isset($_POST["resume"]) && !empty($_POST["resume"])) echo(safehtml($_POST["resume"]));
+    echo("</textarea>");
     //editeur
     if (isset($_POST["text"]) && !empty($_POST["text"]) && $_POST["text"] != "<p>Hello,+World!</p>") echo ("<textarea id=\"mytextarea\" name=\"text\">".safehtml($_POST["text"])."</textarea>");
     else echo ("<textarea id=\"mytextarea\" name=\"text\">Hello, World!</textarea>");

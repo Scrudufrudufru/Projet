@@ -17,7 +17,10 @@
 
     $req = "INSERT INTO users (username,password,nom,prenom,email) VALUES (\"".$username."\",\"".$password."\",\"".$nom."\",\"".$prenom."\",\"".$email."\")";
     $rel = mysqli_query($co,$req);
-    if ($rel) echo ("Inscription reussie, <a href=\"main.php\"> retour à l'acceuil");
+    if ($rel) {
+      echo ("Inscription reussie, <a href=\"main.php\"> retour à l'acceuil");
+      $_SESSION["username"] = $username;
+    }
 
   } else {
     echo("<div id=\"formulaire\"><form action=\"inscription.php\" method=\"POST\"><div id=\"input\">Nom d'utilisateur<br><input type=\"text\" name=\"username\"");

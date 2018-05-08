@@ -4,7 +4,7 @@
     $req = "SELECT nom,prenom FROM users WHERE username =\"".$_SESSION["username"]."\";";
     $res = mysqli_query($co,$req);
     $ligne = mysqli_fetch_assoc($res);
-    echo("Bonjour".$ligne["prenom"]." ".$ligne["nom"]."<br><a href=\"profile.php\">Profile</a><br><a href=\"main.php?page=creation>Nouvel article</a><br><a href=\"main.php?page=validation\"");
+    echo("Bonjour ".$ligne["prenom"]." ".$ligne["nom"]."<br><a href=\"profile.php\">Profil</a><br><a href=\"main.php?page=creation\">Nouvel article</a><br><a href=\"main.php?page=validation\">Valider un article</a>");
   } else if (!isset($_SESSION["username"])) { //Cas ou non connecté
     if (isset($_POST["username"]) && !empty($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["password"])) {
       $req = "SELECT username, password FROM users WHERE username=\"".$_POST["username"]."\"";

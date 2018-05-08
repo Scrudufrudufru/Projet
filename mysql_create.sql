@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS articles(
   article_id BIGINT AUTO_INCREMENT,
   user BIGINT,
   cat INT,
-  titre VARCHAR(20) NOT NULL,
+  titre VARCHAR(40) NOT NULL,
   resume VARCHAR(255),
   timecreation DATETIME NOT NULL,
   texte TEXT NOT NULL,
