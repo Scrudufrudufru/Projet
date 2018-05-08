@@ -1,6 +1,8 @@
 <?php
   require_once 'connect.php';
   echo("<h2>Inscription</h2>");
+
+  //Traitement des données du formulaire d'inscription
   if (isset($_POST["username"]) && !empty($_POST["username"]) && isset($_POST["prenom"]) &&
             !empty($_POST["prenom"]) && isset($_POST["email"]) && !empty($_POST["email"])&&
             isset($_POST["nom"]) && !empty($_POST["nom"]) && isset($_POST["password"]) &&
