@@ -1,9 +1,7 @@
 body {
   font-family: "Arial-black", sans-serif;
   font-weight: lighter;
-  margin: 25px;
-  width : 80%;
-
+  margin: 40px;
 }
 
 h1 {
@@ -20,22 +18,39 @@ a:hover {
   color : gray;
 }
 
-#categories table {
-  width: 100%;
+.main {
+  margin-left: auto;
+  margin-right: auto;
+  width : 65%;
+  background-color: lightgray;
 }
 
-#login {
+.categories table {
+  width: 80%;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login {
   margin: 20px;
   float:right;
+  padding: 35px;
 }
 
-#contenu {
+.logo {
+  display:block;
+  height:110px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+}
+
+.contenu {
   width : inherit;
-  min-height: 500px; 
+  min-height: 500px;
+  max-width: 800px;
   float : left;
-  border-style: solid;
-  border-color: lightgray;
-  border-width: thin;
   padding: 10px;
   margin: 30px;
 }
