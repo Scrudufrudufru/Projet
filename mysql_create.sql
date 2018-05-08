@@ -41,6 +41,15 @@ CREATE TABLE IF NOT EXISTS articles(
   FOREIGN KEY (cat) REFERENCES categorie(catid)
 );
 
+CREATE TABLE IF NOT EXISTS validation (
+  valid_id BIGINT AUTO_INCREMENT,
+  user_id BIGINT,
+  articleid BIGINT,
+  PRIMARY KEY (valid_id),
+  FOREIGN KEY (user_id) REFERENCES users(userid),
+  FOREIGN KEY (articleid) REFERENCES articles(article_id)
+);
+
 INSERT INTO users(username, password,nom,prenom,email)
 VALUES  ('user1','$2y$10$OB8OsgNmfAhNP6wsRnWQgezQ43Vm9YuiiC6aWGC6iz2Qeez3C6qWq','Nomu1','Prenomu1','email1@mail.com'),
         ('user2','$2y$10$/LBNbUZtcXo1x9jfTFbno.UHBVQgUFWWsEwPMl2e/VIkktTWDQ66C','Nomu2','Prenomu2','email2@mail.com'),
