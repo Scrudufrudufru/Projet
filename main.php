@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <title>Home - La Collab UP7D</title>
+    <title>Home - Le Scope UP7D</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="main.css" type="text/css">
   </head>
