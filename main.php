@@ -15,11 +15,11 @@
     <div class="categories">
       <table><tr>
       <?php //Creation d'une table avec les liens vers les categories
-        $req = "SELECT * FROM categorie ORDER BY catid;";
+        $req = "SELECT * FROM categorie ORDER BY catid";
         $res = mysqli_query($co, $req);
         //$ligne= mysqli_fetch_assoc($res); //N'est pas necessaire empeche laffichae de la categorie 1
         while ($ligne = mysqli_fetch_assoc($res)) {
-          echo("<th><a href=\"main.php?cat=".safehtml($ligne["catid"])."\">".safehtml($ligne["catnom"])."</a></th>");
+          echo("<th><a href=\"main.php?cat=".safehtml($ligne["catid"])."\">".$ligne["catnom"]."</a></th>");
         }
       ?>
     </tr></table>

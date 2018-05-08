@@ -8,13 +8,13 @@ CREATE TABLE IF NOT EXISTS users(
   points INT NOT NULL DEFAULT -1,
   photo VARCHAR(20),
   PRIMARY KEY (userid)
-);
+) CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS  categorie (
   catid INT AUTO_INCREMENT,
   catnom VARCHAR(20) NOT NULL UNIQUE,
   PRIMARY KEY (catid)
-);
+) CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS articles(
   article_id BIGINT AUTO_INCREMENT,
@@ -34,4 +34,6 @@ CREATE TABLE IF NOT EXISTS articles(
   PRIMARY KEY (article_id),
   FOREIGN KEY (user) REFERENCES users(userid),
   FOREIGN KEY (cat) REFERENCES categorie(catid)
-);
+) CHARSET=utf8;
+
+INSERT INTO categorie (catnom) VALUES ('Actualités Fac'),('International'),('Politique'),('Culture'),('Sciences');

@@ -1,6 +1,7 @@
 <?php
   require_once 'connect.php';
   echo("<h2>Inscription</h2>");
+  echo("<p>Rejoingnez notre communauté pour pouvoir particper au journal. En validant des articles pour la publication vous gagnerez des points jusqu'à pouvoir composer vos propres articles! Plus vous participez plus la qualité du journal sera protegée.</p>");
 
   //Traitement des données du formulaire d'inscription
   if (isset($_POST["username"]) && !empty($_POST["username"]) && isset($_POST["prenom"]) &&
