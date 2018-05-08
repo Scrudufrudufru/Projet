@@ -35,7 +35,8 @@
     //Traitement des données
     $titre = safeDB($co, $_POST["titre"]);
     $cat = safeDB($co, $_POST["cat"]);
-    $text = safeDB($co, $_POST["text"]);
+    //NE PAS PROTEGER $text
+    $text = $_POST["text"];//safeDB($co, $_POST["text"]); ATTENTION NE DOIT PAS ETRE PROTEGé, il est deja protege par lediteur, de le proteger encore avant la base de donnee empeche d'enregistrer le formattage
     $resume = safeDB($co, $_POST["resume"]);
 
     //Insertion des données dans la DB
