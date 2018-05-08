@@ -1,10 +1,15 @@
 <?php
   require_once("connect.php");
+  if (isset($_GET["page"]) && $_GET["page"] == "dec") {
+    session_unset();
+    session_destroy();
+    header('main.php');
+  }
   if (isset($_SESSION["username"])) { //Cas ou l'on est connecté
     $req = "SELECT nom,prenom FROM users WHERE username =\"".$_SESSION["username"]."\";";
     $res = mysqli_query($co,$req);
     $ligne = mysqli_fetch_assoc($res);
-    echo("Bonjour ".$ligne["prenom"]." ".$ligne["nom"]."<br><a href=\"main.php?page=profil\">Profil</a><br><a href=\"main.php?page=creation\">Nouvel article</a><br><a href=\"main.php?page=validation\">Valider un article</a>");
+    echo("Bonjour ".$ligne["prenom"]." ".$ligne["nom"]."<br><a href=\"main.php?page=profil\">Profil</a><br><a href=\"main.php?page=creation\">Nouvel article</a><br><a href=\"main.php?page=validation\">Valider un article</a><br><a href=\"main.php?page=dec\">Deconnexion</a>");
   } else if (!isset($_SESSION["username"])) { //Cas ou non connecté
     if (isset($_POST["username"]) && !empty($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["password"])) {
       $req = "SELECT username, password FROM users WHERE username=\"".$_POST["username"]."\"";

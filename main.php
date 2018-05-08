@@ -46,7 +46,8 @@
 
       <div class="login">
         <?php
-          require_once("login.php");
+        if (isset($_GET["page"]) && $_GET["page"] == "inscription") echo("Créez votre compte pour rejoindre notre communauté.");
+        else  require_once("login.php");
         ?>
       </div>
     </div>
