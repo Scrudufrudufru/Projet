@@ -1,4 +1,5 @@
 <?php
+  session_start();
   $login = "dave";
   $mdp = "K12deU45nH";
   $base = "projet";

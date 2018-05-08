@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'projet/connect.php';
+include 'connect.php';
 function login($co) {
   $req = 'select username, password from users where username=\''.$_POST['username'].'\'';
   $res = mysqli_query($co, $req);
@@ -41,7 +41,7 @@ if (isset($_POST['username'], $_POST['password'])) {
 
   <?php
 
-  include 'projet/main.php';
+  include 'main.php';
 
   ?>
 

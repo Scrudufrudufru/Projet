@@ -22,11 +22,18 @@
     $titre = safeDB($co, $_POST["titre"]);
     $cat = safeDB($co, $_POST["cat"]);
     $text = safeDB($co, $_POST["text"]);
-    //$req = "INSERT INTO articles (user,cat,titre,timecreation,texte) VALUES (/*userid*/,$cat,$titre,$text,date("Y-m-d H:i:s"))";
-    //mysqli_query($co,$req);
+
+    $req = "SELECT userid FROM users WHERE username=\"".$_SESSION["username"]."\"";
+    $res = mysqli_query($co,$req);
+    $ligne = mysqli_fetch_assoc($res);
+    $userid = $ligne["userid"];
+
+    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte) VALUES (\"".$userid."\",\"".$cat."\",\"".$titre."\",\"".date("Y-m-d H:i:s")."\",\"".$text."\")";
+    mysqli_query($co,$req);
     echo ("Article enregistré et en attente de validation"); //Ajouter un preview de l'article
   } else { // Si tous les inputs ne sont pas remplis on affiche le formulaire en gardant les cases deja remplis
     //formulaire : case titre
+    if (isset($_POST["titre"]) || isset($_POST["text"])) echo ("Vous n'avez pas correctement rempli le formulaire");
     echo("<form method=\"POST\" action=\"main.php?page=creation\"> Titre :");
     if (isset($_POST["titre"]) && !empty($_POST["titre"]) && $_POST["titre"] != "Titre") echo ("<input type=\"text\" name=\"titre\" value=\"".safehtml($_POST["titre"])."\"><br>");
     else echo("<input type=\"text\" name=\"titre\" value=\"Titre\" required><br>");
