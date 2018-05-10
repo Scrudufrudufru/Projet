@@ -38,8 +38,7 @@ if ($uploadOk == 0) {
         require_once 'connect.php';
         $req = "UPDATE users SET photo=\"".$target_file."\" WHERE username = \"".$_SESSION["username"]."\";";
         $res = mysqli_query($co,$req);
-        echo $req;
-        if (!$res) echo "error";
+        if (!$res) echo "Erreur de base de donnée";
         echo "Le fichier ". basename( $_FILES["fileToUpload"]["name"]). " a été téléchargé.";
     } else {
         echo "Le fichier n'a pas été téléchargé, merci de réessayer.";
