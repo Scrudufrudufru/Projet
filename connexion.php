@@ -2,15 +2,15 @@
 session_start();
 include 'connect.php';
 function login($co) {
-  $req = 'select username, password from users where username=\''.$_POST['username'].'\'';
+  $req = 'select username, password from users where username=\''.safeDB($_POST['username']).'\'';
   $res = mysqli_query($co, $req);
   $x;
   if ($res) {
     $ligne = mysqli_fetch_assoc($res);
-    $x = $ligne['password'];
+    $x = safeDB($ligne['password']);
   }
   if (password_verify($_POST['password'], $x)) {
-    $_SESSION['username'] = htmlspecialchars($_POST['username']);
+    safehtml($_SESSION['username']) = safehtml($_POST['username']);
     header('Location: index.php?page=compte');
     exit();
   } else {

@@ -26,14 +26,14 @@
   ($_POST["text"] != "<p>Hello,+World!</p>") && $_POST["titre"] != "Titre" && isset($_POST["resume"]) && !empty($_POST["resume"])) {
 
     //recuperation de l'id de lutilisateur
-    $req = "SELECT userid FROM users WHERE username=\"".$_SESSION["username"]."\"";
+    $req = "SELECT userid FROM users WHERE username=\"".safefromDB($_SESSION["username"])."\"";
     $res = mysqli_query($co,$req);
       if (!$res) {
         echo ("Vous n'êtes pas connecté.");
         exit();
       }
     $ligne = mysqli_fetch_assoc($res);
-    $userid = $ligne["userid"];
+    $userid = safefromDB($ligne["userid"]);
     //Traitement des données
     $titre = safeDB($co, $_POST["titre"]);
 

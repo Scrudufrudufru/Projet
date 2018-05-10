@@ -1,4 +1,4 @@
-safefromDB($ligne<?php
+<?php
   require_once("connect.php");
 
   function affichearticlecourt ($titre,$nom,$prenom,$date,$cat,$resume,$id) { //Renvoie une division avec un article
@@ -47,9 +47,9 @@ safefromDB($ligne<?php
   }
 
   function articlenonvalidehasard ($co) {//Revoie l'id d'un article non validé
-    $req ="SELECT articles.article_id FROM articles,users,validation WHERE articles.note < \"100\" AND \"".$_SESSION["username"]."\"=username AND user_id<>userid AND user<>userid ORDER BY RAND() LIMIT 1;";
+    $req ="SELECT articles.article_id FROM articles,users,validation WHERE articles.note < \"100\" AND \"".safefromDB($_SESSION["username"])."\"=username AND user_id<>userid AND user<>userid ORDER BY RAND() LIMIT 1;";
     $res = mysqli_query($co,$req);
     if (!$res) echo ("rerror");
-    echo($ligne["article_id"]);
+    echo(safefromDB($ligne["article_id"]));
   }
 ?>
