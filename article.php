@@ -5,7 +5,7 @@
       echo("<div class=\"court\"><a href=\"main.php?page=article&id=".$id."\">");
       if (!empty($img)) {
         echo("<div class=\"image\"><img src=\"$img\"></div>");
-      }
+      } //else echo("<div class=\"image\"><img src=\"$img\"></div>");
       echo("<div class=\"header\"><h3>".$titre."</h3>".$date." | ".$cat."</div>
         <div class=\"corps\"><p>".$resume."</p></div></a></div>");
   }

@@ -11,7 +11,7 @@ if (isset($_SESSION["username"])) {//Verification d'une correction ouverte (engl
     if (isset($_POST["username"]) && !empty($_POST["username"]) && safehtml($_POST["username"])!=safehtml($ligne["username"])) {//Variable est definie et differente de la valeur actuelle
       $req ="UPDATE users SET username=\"".safeDB($co,$_POST["username"])."\" WHERE userid=\"".safeDB($co,$ligne["userid"])."\";";//Requete
       $changeuser = mysqli_query($co,$req);//Execution de la requete et boolean pour confirmation
-      if ($changeuser) safehtml($_SESSION["username"]) = safehtml($_POST["username"]);//Changement de la variable de session
+      if ($changeuser) $_SESSION["username"] = safehtml($_POST["username"]);//Changement de la variable de session
     }
     if (isset($_POST["nom"]) && !empty($_POST["nom"]) && safehtml($_POST["nom"])!=safehtml(safefromDB($ligne["nom"]))) {//Variable est definie et differente de la valeur actuelle
       $req ="UPDATE users SET nom=\"".safeDB($co,$_POST["nom"])."\" WHERE userid=\"".safeDB($co,$ligne["userid"])."\";";//Requete
@@ -21,8 +21,8 @@ if (isset($_SESSION["username"])) {//Verification d'une correction ouverte (engl
       $req ="UPDATE users SET prenom=\"".safeDB($co,$_POST["prenom"])."\" WHERE userid=\"".$ligne["userid"]."\";";//Requete
       $changeprenom = mysqli_query($co,$req);//Execution de la requete et boolean pour confirmation
     }
-    if (isset($_POST["email"]) && !empty($_POST["email"]) && safehtml($_POST["email"])!=safehtml(safefromDB($ligne["email"])) {//Variable est definie et differente de la valeur actuelle
-      $req ="UPDATE users SET email=\"".safeDB($co,$_POST["email"])."\" WHERE userid=\"".$ligne["userid"]."\";";//Requete
+    if (isset($_POST["email"]) && !empty($_POST["email"]) && safehtml($_POST["email"])!=safehtml(safefromDB($ligne["email"]))) {//Variable est definie et differente de la valeur actuelle
+      $req = "UPDATE users SET email=\"".safeDB($co,$_POST["email"])."\" WHERE userid=\"".$ligne["userid"]."\";";//Requete
       $changeemail= mysqli_query($co,$req);//Execution de la requete et boolean pour confirmation
     }
 
@@ -76,6 +76,16 @@ if (isset($_SESSION["username"])) {//Verification d'une correction ouverte (engl
       <br><div class=\"input\"><input type=\"submit\" value=\"Changer votre mot de passe\"></div>
     </form>
     </div>");
+    echo("<br><br>Choisissez une photo de profil: <br>");
+    if (isset($_POST["submit"]) && $_POST["submit"]==="Upload Image") {
+      require_once("upload.php");
+    }
+
+    echo('<form action="main.php?page=modif" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+    </form>');
 
 } else {
   echo("Vous n'êtes pas connecté. <a href=\"main.php?page=modif\">Rejoingnez la communauté</a>");
