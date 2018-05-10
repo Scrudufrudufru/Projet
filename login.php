@@ -6,10 +6,12 @@
     header('main.php');
   }
   if (isset($_SESSION["username"])) { //Cas ou l'on est connecté
-    $req = "SELECT nom,prenom FROM users WHERE username =\"".$_SESSION["username"]."\";";
+    $req = "SELECT nom,prenom,username FROM users WHERE username =\"".$_SESSION["username"]."\";";
     $res = mysqli_query($co,$req);
     $ligne = mysqli_fetch_assoc($res);
-    echo("Bonjour ".$ligne["prenom"]." ".$ligne["nom"]."<br><a href=\"main.php?page=profil\">Profil</a><br><a href=\"main.php?page=creation\">Nouvel article</a><br><a href=\"main.php?page=validation\">Valider un article</a><br><a href=\"main.php?page=dec\">Deconnexion</a>");
+    echo("Bonjour ".$ligne["prenom"]." ".$ligne["nom"]."<br><a href=\"main.php?page=profil\">Votre profil</a>");
+    if (isset($_SESSION["username"]) && $_SESSION["username"] == $ligne["username"]) echo("<br><a href=\"main.php?page=modif\">Modifiez votre profil</a>");
+    echo("<br><a href=\"main.php?page=creation\">Nouvel article</a><br><a href=\"main.php?page=validation\">Valider un article</a><br><a href=\"main.php?page=dec\">Deconnexion</a>");
   } else if (!isset($_SESSION["username"])) { //Cas ou non connecté
     if (isset($_POST["username"]) && !empty($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["password"])) {
       $req = "SELECT username, password FROM users WHERE username=\"".$_POST["username"]."\"";

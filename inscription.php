@@ -18,7 +18,7 @@
     $req = "INSERT INTO users (username,password,nom,prenom,email) VALUES (\"".$username."\",\"".$password."\",\"".$nom."\",\"".$prenom."\",\"".$email."\")";
     $rel = mysqli_query($co,$req);
     if ($rel) {
-      echo ("Inscription reussie, <a href=\"main.php\"> retour à l'acceuil</a>");
+      echo ("Inscription reussie, <a href=\"main.php\"> retour à l'acceuil</a><a href=\"main.php?page=modif\">Personnalisez votre profil avec une photo ou une description</a>");
       $_SESSION["username"] = $username;
     }
 

@@ -14,6 +14,8 @@
     //Pour uploader des fichiers
     //file_browser_callback: function(field_name, url, type, win) {win.document.getElementById(field_name).value = 'my browser value';}
 }) </script>
+
+
 <?php
   require_once("./connect.php");
   echo ("<h2>Création d'un nouvel article</h2>");

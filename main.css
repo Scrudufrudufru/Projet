@@ -21,8 +21,7 @@ a:hover {
 .main {
   margin-left: auto;
   margin-right: auto;
-  width : 65%;
-  background-color: lightgray;
+  width : 60%;
 }
 
 .categories table {
@@ -30,13 +29,6 @@ a:hover {
   margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.login {
-  margin: 20px;
-  float:right;
-  padding: 35px;
-  width: 160px;
 }
 
 .logo {
@@ -54,4 +46,15 @@ a:hover {
   float : left;
   padding: 10px;
   margin: 30px;
+}
+
+.login {
+  margin: 20px;
+  float:right;
+  padding: 35px;
+  width: 160px;
+}
+
+.input {
+  margin-bottom: 10px;
 }

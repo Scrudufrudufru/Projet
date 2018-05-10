@@ -19,7 +19,7 @@
         $res = mysqli_query($co, $req);
         //$ligne= mysqli_fetch_assoc($res); //N'est pas necessaire empeche laffichae de la categorie 1
         while ($ligne = mysqli_fetch_assoc($res)) {
-          echo("<th><a href=\"main.php?cat=".safehtml($ligne["catid"])."\">".$ligne["catnom"]."</a></th>");
+          echo("<th style=\"width:".(100/(mysqli_num_rows($res)+1))."%\"><a href=\"main.php?cat=".safehtml($ligne["catid"])."\">".$ligne["catnom"]."</a></th>");
         }
       ?>
     </tr></table>
@@ -31,16 +31,20 @@
         <?php
         if (!isset($_GET["page"]) || (isset($_GET["page"]) && $_GET["page"] == "article")) {
           require_once("article.php");
+          if (isset($_GET["cat"])) listearticle($co,requeteCat($_GET["cat"]));
+          else if (isset($_GET["page"]) && $_GET["page"] == "article" && isset($_GET["id"])) affichearticleentier($co,$_GET["id"]);
+          else listearticle($co,"SELECT * FROM categorie, users, articles WHERE (user = userid) AND (cat = catid) ORDER BY timecreation LIMIT 10");
         }
         if (isset($_GET["page"])) {
-          if ($_GET["page"] == "creation") {
-            require_once("creation.php");
-          }
-          if ($_GET["page"] == "inscription") {
-            require_once("inscription.php");
+        switch ($_GET["page"]) {
+            case "creation" : require_once("creation.php"); break;
+            case "inscription" : require_once("inscription.php"); break;
+            case "validation" : require_once("article.php"); break;
+                                articlenonvalidehasard($co); break;
+            case "profil" : require_once("profil.php"); break;
+            case "modif" : require_once("modif.php"); break;
           }
         }
-
             ?>
       </div>
 
