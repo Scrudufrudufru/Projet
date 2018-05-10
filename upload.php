@@ -15,10 +15,11 @@ if(isset($_POST["submit"])) {
         $uploadOk = 0;
     }
 }
+$target_file="profil/".$userid.'.'.pathinfo($target_file, PATHINFO_EXTENSION);
 // Check if file already exists
 if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
-    $uploadOk = 0;
+    if (!unlink($target_file)) echo "Erreur lors de la suppresssion de l'ancienne photo.";
+    else echo "L'ancienne photo a été supprimée";
 }
 // Check file size
 if ($_FILES["fileToUpload"]["size"] > 500000) {

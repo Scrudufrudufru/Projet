@@ -6,7 +6,7 @@ if (isset($_SESSION["username"])) {//Verification d'une correction ouverte (engl
   $req = "SELECT * FROM users WHERE username=\"".safeDB($co,$_SESSION["username"])."\";";
   $res = mysqli_query($co,$req);
   $ligne = mysqli_fetch_assoc($res);
-
+  $userid = safefromDB($ligne["userid"]);
   //cas ou l'utilisateur a validé le formulaire pour les données autre que le mot de passe
     if (isset($_POST["username"]) && !empty($_POST["username"]) && safehtml($_POST["username"])!=safehtml($ligne["username"])) {//Variable est definie et differente de la valeur actuelle
       $req ="UPDATE users SET username=\"".safeDB($co,$_POST["username"])."\" WHERE userid=\"".safeDB($co,$ligne["userid"])."\";";//Requete
