@@ -19,7 +19,7 @@
 
 <?php
   require_once("./connect.php");
-  echo ("<h2>Création d'un nouvel article</h2>");
+  echo ("<h2>Création d'un nouvel article</h2><span style=\"color: #cc9999;\">Attention certain charactère empêcheront l'enregistrement! par exemple: ð</span><br>");
   //Traitement du formulaire
   if (isset($_POST["titre"]) && isset($_POST["cat"]) && isset($_POST["text"]) &&
   !empty($_POST["titre"]) && !empty($_POST["cat"]) && !empty($_POST["text"]) &&
@@ -33,19 +33,32 @@
         exit();
       }
     $ligne = mysqli_fetch_assoc($res);
+    //specialchars pour proteger d'un post non voulu, le premier strchr trouve la premiere balise image
+    //puis le substr retire la balise jusqu'a ladresse de limage en supprimant tout apres 20 charactères
+    //enfin le dernier strchr enleve la balise fermante on a maintenant un string avec ladresse de la premiere image
+    if (!empty(strchr(htmlspecialchars($_POST["text"]),'&lt;img src=&quot;'))) {
+      $img = './'.strchr(substr(strchr(htmlspecialchars($_POST["text"]),'&lt;img src=&quot;'),18,40),'&quot',true);
+      $imgdes = strchr(substr(strchr(substr(strchr(htmlspecialchars($_POST["text"]),'&lt;img src=&quot;'),18),'&quot; alt=&quot;'),17),'&quot',true);
+      //Si imgdes est vide alors il ny a pas de description a ajouter
+      if (empty(strchr(substr(strchr(substr(strchr(htmlspecialchars($_POST["text"]),'&lt;img src=&quot;'),18),'&quot; alt=&quot;'),17),'&quot',true))) {$req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume,image)
+            VALUES (\"".safefromDB($ligne["userid"])."\",\"".safeDB($co, $_POST["cat"])."\",
+            \"".safeDB($co, $_POST["titre"])."\",\"".date("Y-m-d H:i:s")."\",
+            \"".safeDB($co, $_POST["text"])."\",\"".safeDB($co, $_POST["resume"])."\",\"".safeDB($co, $img)."\");";
 
-
-
-
-
-    //Insertion des données dans la DB
-    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume)
-            VALUES (\"".safeDB($co,$ligne["userid"])."\",\"".safeDB($co, $_POST["cat"])."\",
+      } else {
+        //Sinon on ajoute la desciption
+        $req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume,image,imgdescription)
+            VALUES (\"".safefromDB($ligne["userid"])."\",\"".safeDB($co, $_POST["cat"])."\",
+            \"".safeDB($co, $_POST["titre"])."\",\"".date("Y-m-d H:i:s")."\",
+            \"".safeDB($co, $_POST["text"])."\",\"".safeDB($co, $_POST["resume"])."\",\"".safeDB($co, $img)."\",\"".safeDB($co, $imgdes)."\");";
+      }
+    } else $req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume)
+            VALUES (\"".safefromDB($ligne["userid"])."\",\"".safeDB($co, $_POST["cat"])."\",
             \"".safeDB($co, $_POST["titre"])."\",\"".date("Y-m-d H:i:s")."\",
             \"".safeDB($co, $_POST["text"])."\",\"".safeDB($co, $_POST["resume"])."\");";
     $save = mysqli_query($co,$req);
     if ($save) echo ("Article enregistré et en attente de validation");
-    else echo ("Erreur dans le traitement de l'article");
+    else echo ("Erreur dans le traitement de l'article".$req. mysqli_error($co));
      //Ajouter un preview de l'article
   } else { // Si tous les inputs ne sont pas remplis on affiche le formulaire en gardant les cases deja remplis
 

@@ -31,7 +31,7 @@
         <?php
         if (!isset($_GET["page"]) || (isset($_GET["page"]) && safehtml($_GET["page"]) == "article")) {
           require_once("article.php");
-          if (isset($_GET["cat"])) listearticle($co,requeteCat(safehtml($_GET["cat"])));
+          if (isset($_GET["cat"])) listearticle($co,requeteCat($co,$_GET["cat"]));
           else if (isset($_GET["page"]) && safehtml($_GET["page"]) == "article" && isset($_GET["id"])) affichearticleentier($co,safehtml($_GET["id"]));
           else listearticle($co,"SELECT * FROM categorie, users, articles WHERE (user = userid) AND (cat = catid) ORDER BY timecreation DESC LIMIT 10");
         }

@@ -9,7 +9,7 @@
     $req = "SELECT nom,prenom,username FROM users WHERE username =\"".safeDB($co,$_SESSION["username"])."\";";
     $res = mysqli_query($co,$req);
     $ligne = mysqli_fetch_assoc($res);
-    echo("Bonjour ".safefromDB($ligne["prenom"])." ".safefromDB($ligne["nom"])."<br><a href=\"main.php?page=profil\">Votre profil</a>");
+    echo("<p>Bonjour ".safefromDB($ligne["prenom"])." ".safefromDB($ligne["nom"])."</p><hr><a href=\"main.php?page=profil\">Votre profil</a>");
     if (isset($_SESSION["username"]) && safefromDB($_SESSION["username"]) == safefromDB($ligne["username"])) echo("<br><a href=\"main.php?page=modif\">Modifiez votre profil</a>");
     echo("<br><a href=\"main.php?page=creation\">Nouvel article</a><br><a href=\"main.php?page=validation\">Valider un article</a><br><a href=\"main.php?page=dec\">Deconnexion</a>");
   } else if (!isset($_SESSION["username"])) { //Cas ou non connecté
