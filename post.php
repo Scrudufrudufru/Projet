@@ -3,12 +3,8 @@
   /*******************************************************
    * Only these origins will be allowed to upload images *
    ******************************************************/
-  $accepted_origins = array("http://localhost", "http://192.168.1.1", "http://example.com");
+  $accepted_origins = array("http://localhost");
 
-  /*********************************************
-   * Change this line to set the upload folder *
-   *********************************************/
-  $imageFolder = "./images/";
 
   reset ($_FILES);
   $temp = current($_FILES);
@@ -22,14 +18,6 @@
         return;
       }
     }
-    //$temp['tmp_name']="1.png";
-    //echo ("$temp['tmp_name']");
-    /*
-      If your script needs to receive cookies, set images_upload_credentials : true in
-      the configuration and enable the following two headers.
-    */
-    // header('Access-Control-Allow-Credentials: true');
-    // header('P3P: CP="There is no P3P policy."');
 
     // Sanitize input
     if (preg_match("/([^\w\s\d\-_~,;:\[\]\(\).])|([\.]{2,})/", $temp['name'])) {
@@ -43,16 +31,18 @@
         return;
     }
     require_once("connect.php");
+    //destination
+    $dossier = "./images/";
+
     $req = "SELECT MAX(image_id)+1 AS new FROM images;";
     $res = mysqli_query($co,$req);
     $ligne = mysqli_fetch_assoc($res);
-
 
     $temp['name'] = $ligne["new"].'.'.pathinfo($temp['name'], PATHINFO_EXTENSION);
 
 
     // Accept upload if there was no origin, or if it is an accepted origin
-    $filetowrite = $imageFolder . $temp['name'];
+    $filetowrite = $dossier . $temp['name'];
 
     $req = "INSERT INTO images (image_path) VALUES (\"".$filetowrite."\");";
     $res = mysqli_query($co,$req);
