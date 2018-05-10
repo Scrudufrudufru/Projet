@@ -1,0 +1,10 @@
+Le but de ce site est de créer un journal participatif permatant a tous les utilisateurs d'approuver ou de rejetter les articles qui y sont publié par les membres.
+
+Main.php :
+
+On commence par inclure le fichier "connect.php" qui permet de gérer et protéger la connexion avec la table mysqli. Le header inclut le charset (utf-8) et relie le css tout en donnant un titre a la page.
+on place le logo du site en haut avant de diviser la page en 2 blocs, le bloc catégories permet de rediriger vers les différentes catégories d'articles. Le partie main est ensuite divisé en 2 parties le contenu et le login, la première partie consiste à intégrer le fichier "article.php" pour afficher leurs contenus, la seconde permet de ce connecter ou de créé un compte.
+
+Mysql_create.sql :
+
+Différentes tables mysql sont créé dans ce fichier, leurs contenu est organisé en id auto incrémenté. Les talbes sont ensuite remplies avec des utilisateurs par défault et les catégories nécéssaires.
