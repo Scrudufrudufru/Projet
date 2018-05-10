@@ -40,7 +40,7 @@
 
     //Insertion des données dans la DB
     $req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume)
-            VALUES (\"".safeDB($ligne["userid"])."\",\"".safeDB($co, $_POST["cat"])."\",
+            VALUES (\"".safeDB($co,$ligne["userid"])."\",\"".safeDB($co, $_POST["cat"])."\",
             \"".safeDB($co, $_POST["titre"])."\",\"".date("Y-m-d H:i:s")."\",
             \"".safeDB($co, $_POST["text"])."\",\"".safeDB($co, $_POST["resume"])."\");";
     $save = mysqli_query($co,$req);

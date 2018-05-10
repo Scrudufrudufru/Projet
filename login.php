@@ -6,7 +6,7 @@
     header('main.php');
   }
   if (isset($_SESSION["username"])) { //Cas ou l'on est connecté
-    $req = "SELECT nom,prenom,username FROM users WHERE username =\"".safeDB($_SESSION["username"])."\";";
+    $req = "SELECT nom,prenom,username FROM users WHERE username =\"".safeDB($co,$_SESSION["username"])."\";";
     $res = mysqli_query($co,$req);
     $ligne = mysqli_fetch_assoc($res);
     echo("Bonjour ".safefromDB($ligne["prenom"])." ".safefromDB($ligne["nom"])."<br><a href=\"main.php?page=profil\">Votre profil</a>");
