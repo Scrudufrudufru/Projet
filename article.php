@@ -25,6 +25,7 @@
   }
 
   function listearticle ($co,$req){ //Affiche une liste des articles de la requete sql
+    $req = safehtml($req);
     $res = mysqli_query($co,$req);
     if (!$res) echo ("erreur : ");
     else {

@@ -19,7 +19,7 @@
         $res = mysqli_query($co, $req);
         //$ligne= mysqli_fetch_assoc($res); //N'est pas necessaire empeche laffichae de la categorie 1
         while ($ligne = mysqli_fetch_assoc($res)) {
-          echo("<th style=\"width:".(100/(mysqli_num_rows($res)+1))."%\"><a href=\"main.php?cat=".safehtml($ligne["catid"])."\">".$ligne["catnom"]."</a></th>");
+          echo("<th style=\"width:".(100/(mysqli_num_rows($res)+1))."%\"><a href=\"main.php?cat=".safefromDB($ligne["catid"])."\">".safefromDB($ligne["catnom"])."</a></th>");
         }
       ?>
     </tr></table>
@@ -29,14 +29,14 @@
     <div class="main">
       <div class="contenu">
         <?php
-        if (!isset($_GET["page"]) || (isset($_GET["page"]) && $_GET["page"] == "article")) {
+        if (!isset($_GET["page"]) || (isset($_GET["page"]) && safehtml($_GET["page"]) == "article")) {
           require_once("article.php");
-          if (isset($_GET["cat"])) listearticle($co,requeteCat($_GET["cat"]));
-          else if (isset($_GET["page"]) && $_GET["page"] == "article" && isset($_GET["id"])) affichearticleentier($co,$_GET["id"]);
-          else listearticle($co,"SELECT * FROM categorie, users, articles WHERE (user = userid) AND (cat = catid) ORDER BY timecreation LIMIT 10");
+          if (isset($_GET["cat"])) listearticle($co,requeteCat(safehtml($_GET["cat"])));
+          else if (isset($_GET["page"]) && safehtml($_GET["page"]) == "article" && isset($_GET["id"])) affichearticleentier($co,safehtml($_GET["id"]));
+          else listearticle($co,"SELECT * FROM categorie, users, articles WHERE (user = userid) AND (cat = catid) ORDER BY timecreation DESC LIMIT 10");
         }
         if (isset($_GET["page"])) {
-        switch ($_GET["page"]) {
+        switch (safehtml($_GET["page"])) {
             case "creation" : require_once("creation.php"); break;
             case "inscription" : require_once("inscription.php"); break;
             case "validation" : require_once("article.php"); break;
@@ -50,9 +50,9 @@
 
       <div class="login">
         <?php
-        if (isset($_GET["page"]) && $_GET["page"] == "inscription") echo("Créez votre compte pour rejoindre notre communauté.");
+        if (isset($_GET["page"]) && safehtml($_GET["page"]) == "inscription") echo("Créez votre compte pour rejoindre notre communauté.");
         else  require_once("login.php");
-        
+
         ?>
       </div>
     </div>

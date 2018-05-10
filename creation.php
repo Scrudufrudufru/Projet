@@ -33,23 +33,19 @@
         exit();
       }
     $ligne = mysqli_fetch_assoc($res);
-    $userid = safefromDB($ligne["userid"]);
-    //Traitement des données
-    $titre = safeDB($co, $_POST["titre"]);
-
-    $cat = safeDB($co, $_POST["cat"]);
-    //NE PAS PROTEGER $text
-    $text = safeDB($co, $_POST["text"]); //ATTENTION NE DOIT PAS ETRE PROTEGé, il est deja protege par lediteur, de le proteger encore avant la base de donnee empeche d'enregistrer le formattage
 
 
-    $resume = safeDB($co, $_POST["resume"]);
+
+
+
     //Insertion des données dans la DB
-    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte)
-      VALUES (\"".$userid."\",\"".$cat."\",\"".$titre."\",\"".date("Y-m-d H:i:s")."\",\"".$text."\")";
+    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume)
+            VALUES (\"".safeDB($ligne["userid"])."\",\"".safeDB($co, $_POST["cat"])."\",
+            \"".safeDB($co, $_POST["titre"])."\",\"".date("Y-m-d H:i:s")."\",
+            \"".safeDB($co, $_POST["text"])."\",\"".safeDB($co, $_POST["resume"])."\");";
     $save = mysqli_query($co,$req);
     if ($save) echo ("Article enregistré et en attente de validation");
     else echo ("Erreur dans le traitement de l'article");
-    echo mysqli_error($co);
      //Ajouter un preview de l'article
   } else { // Si tous les inputs ne sont pas remplis on affiche le formulaire en gardant les cases deja remplis
 
@@ -65,9 +61,9 @@
     $req = "SELECT * FROM categorie ORDER BY catid;"; //requete pour les categories
     $res = mysqli_query($co, $req);
     while ($ligne = mysqli_fetch_assoc($res)) { //parcours la liste des categoires en les affichants
-        echo("<option value=\"".safehtml($ligne["catid"])."\" ");
+        echo("<option value=\"".safefromDB($ligne["catid"])."\" ");
         if (isset($_POST["cat"]) && $ligne["catid"] == $_POST["cat"]) echo("selected"); // ajoute l'attribut selected sur la categorie choissie
-        echo(">".safehtml($ligne["catnom"])."</option>");
+        echo(">".safefromDB($ligne["catnom"])."</option>");
     }
     echo("</select><br><br>");
 

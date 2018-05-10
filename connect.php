@@ -5,6 +5,8 @@
   $mdp = "K12deU45nH";
   $base = "projet";
   $co = mysqli_connect("localhost",$login,$mdp,$base);
+  mysqli_set_charset($co,"utf8");
+  
   if (!$co) {
     echo("Echec de la connexion : ".mysqli_connect_error($co));
   }
