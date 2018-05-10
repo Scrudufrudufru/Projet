@@ -34,19 +34,23 @@
       }
     $ligne = mysqli_fetch_assoc($res);
     $userid = $ligne["userid"];
-
     //Traitement des données
     $titre = safeDB($co, $_POST["titre"]);
+
     $cat = safeDB($co, $_POST["cat"]);
     //NE PAS PROTEGER $text
-    $text = $_POST["text"];//safeDB($co, $_POST["text"]); ATTENTION NE DOIT PAS ETRE PROTEGé, il est deja protege par lediteur, de le proteger encore avant la base de donnee empeche d'enregistrer le formattage
-    $resume = safeDB($co, $_POST["resume"]);
+    $text = safeDB($co, $_POST["text"]); //ATTENTION NE DOIT PAS ETRE PROTEGé, il est deja protege par lediteur, de le proteger encore avant la base de donnee empeche d'enregistrer le formattage
 
+
+    $resume = safeDB($co, $_POST["resume"]);
     //Insertion des données dans la DB
-    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte,resume)
-      VALUES (\"".$userid."\",\"".$cat."\",\"".$titre."\",\"".date("Y-m-d H:i:s")."\",\"".$text."\",\"".$resume."\")";
-    mysqli_query($co,$req);
-    echo ("Article enregistré et en attente de validation"); //Ajouter un preview de l'article
+    $req = "INSERT INTO articles (user,cat,titre,timecreation,texte)
+      VALUES (\"".$userid."\",\"".$cat."\",\"".$titre."\",\"".date("Y-m-d H:i:s")."\",\"".$text."\")";
+    $save = mysqli_query($co,$req);
+    if ($save) echo ("Article enregistré et en attente de validation");
+    else echo ("Erreur dans le traitement de l'article");
+    echo mysqli_error($co);
+     //Ajouter un preview de l'article
   } else { // Si tous les inputs ne sont pas remplis on affiche le formulaire en gardant les cases deja remplis
 
     echo("<form method=\"POST\" action=\"main.php?page=creation\">");

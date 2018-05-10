@@ -1,4 +1,4 @@
-<?php
+safefromDB($ligne<?php
   require_once("connect.php");
 
   function affichearticlecourt ($titre,$nom,$prenom,$date,$cat,$resume,$id) { //Renvoie une division avec un article
@@ -13,11 +13,11 @@
       $req = "SELECT articles.titre, articles.resume, articles.timecreation, articles.texte, articles.user, categorie.catnom, users.nom, users.prenom FROM users, categorie, articles WHERE (user = userid) AND (cat = catid) AND (article_id=\"".$id."\")";
       $res = mysqli_query($co,$req);
       $ligne = mysqli_fetch_assoc($res);
-      $text = $ligne["texte"];
+      $text = safefromDB($ligne["texte"]);
       echo("<div class=\"article\">
-        <h2>".$ligne["titre"]."</h2>
-        <p>".$ligne["resume"]."</p>
-        ".$ligne["timecreation"]."<br><a href=main.php?page=profil&id=".$ligne["user"].">".$ligne["prenom"]." ".$ligne["nom"]."</a><br>
+        <h2>".safefromDB($ligne["titre"])."</h2>
+        <p>".safefromDB($ligne["resume"])."</p>
+        ".safefromDB($ligne["timecreation"])."<br><a href=main.php?page=profil&id=".safefromDB($ligne["user"]).">".safefromDB($ligne["prenom"])." ".safefromDB($ligne["nom"])."</a><br>
         ");
         echo $text;
         echo("
@@ -29,14 +29,14 @@
     if (!$res) echo ("erreur : ");
     else {
       while($ligne = mysqli_fetch_assoc($res)) {
-        affichearticlecourt(safehtml($ligne["titre"]),safehtml($ligne["nom"]),safehtml($ligne["prenom"]),safehtml($ligne["timecreation"]),safehtml($ligne["catnom"]),safehtml($ligne["resume"]),safehtml($ligne["article_id"]));
+        affichearticlecourt(safefromDB($ligne["titre"]),safefromDB($ligne["nom"]),safefromDB($ligne["prenom"]),safefromDB($ligne["timecreation"]),safefromDB($ligne["catnom"]),safefromDB($ligne["resume"]),safefromDB($ligne["article_id"]));
       }
     }
   }
 
     function listearticle_res ($res){ //Affiche une liste des articles sans requete
         while($ligne = mysqli_fetch_assoc($res)) {
-        affichearticlecourt(safehtml($ligne["titre"]),safehtml($ligne["nom"]),safehtml($ligne["prenom"]),safehtml($ligne["timecreation"]),safehtml($ligne["catnom"]),safehtml($ligne["resume"]),safehtml($ligne["article_id"]));
+        affichearticlecourt(safefromDB($ligne["titre"]),safefromDB($ligne["nom"]),safefromDB($ligne["prenom"]),safefromDB($ligne["timecreation"]),safefromDB($ligne["cat"]),safefromDB($ligne["resume"]),safefromDB($ligne["article_id"]));
       }
     }
 

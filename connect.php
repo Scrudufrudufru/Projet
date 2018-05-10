@@ -1,6 +1,6 @@
 <?php
   session_start();
-  
+
   $login = "dave";
   $mdp = "K12deU45nH";
   $base = "projet";
@@ -22,6 +22,10 @@
   function safehtml ($var) { //Renvoie le string traité pour proteger laffichage html
     $var = htmlspecialchars($var);
     return trim($var);
+  }
+
+  function safefromDB ($var) {
+    return htmlspecialchars_decode($var);
   }
 
 ?>
