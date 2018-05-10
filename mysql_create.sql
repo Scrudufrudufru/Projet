@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS validation;
 DROP TABLE IF EXISTS articles;
 DROP TABLE IF EXISTS categorie;
@@ -33,10 +34,8 @@ CREATE TABLE IF NOT EXISTS articles(
   note INT NOT NULL DEFAULT 0,
   image VARCHAR(20),
   imgdescription VARCHAR(255),
-  son VARCHAR(20),
-  sondescription VARCHAR(255),
-  video VARCHAR(20),
-  videodescription VARCHAR(255),
+  media VARCHAR(20),
+  mediadescription VARCHAR(255),
   PRIMARY KEY (article_id),
   FOREIGN KEY (user) REFERENCES users(userid),
   FOREIGN KEY (cat) REFERENCES categorie(catid)
@@ -49,6 +48,14 @@ CREATE TABLE IF NOT EXISTS validation (
   PRIMARY KEY (valid_id),
   FOREIGN KEY (user_id) REFERENCES users(userid),
   FOREIGN KEY (articleid) REFERENCES articles(article_id)
+);
+
+CREATE TABLE IF NOT EXISTS images (
+  image_id BIGINT AUTO_INCREMENT,
+  image_path VARCHAR(20) NOT NULL UNIQUE,
+  article_id_img BIGINT,
+  PRIMARY KEY (image_id),
+  FOREIGN KEY (article_id_img) REFERENCES articles(article_id)
 );
 
 INSERT INTO users(username, password,nom,prenom,email)

@@ -1,4 +1,5 @@
 <?php
+
   /*******************************************************
    * Only these origins will be allowed to upload images *
    ******************************************************/
@@ -21,7 +22,8 @@
         return;
       }
     }
-
+    //$temp['tmp_name']="1.png";
+    //echo ("$temp['tmp_name']");
     /*
       If your script needs to receive cookies, set images_upload_credentials : true in
       the configuration and enable the following two headers.
@@ -40,9 +42,21 @@
         header("HTTP/1.1 400 Invalid extension.");
         return;
     }
+    require_once("connect.php");
+    $req = "SELECT MAX(image_id)+1 AS new FROM images;";
+    $res = mysqli_query($co,$req);
+    $ligne = mysqli_fetch_assoc($res);
+
+
+    $temp['name'] = $ligne["new"].'.'.pathinfo($temp['name'], PATHINFO_EXTENSION);
+
 
     // Accept upload if there was no origin, or if it is an accepted origin
     $filetowrite = $imageFolder . $temp['name'];
+
+    $req = "INSERT INTO images (image_path) VALUES (\"".$filetowrite."\");";
+    $res = mysqli_query($co,$req);
+
     move_uploaded_file($temp['tmp_name'], $filetowrite);
 
     // Respond to the successful upload with JSON.

@@ -9,8 +9,9 @@
     branding: false, //Enleve le lien vers le site tinymce
     height: 500, //Taille de lediteur
     width: 800,
-    contextmenu: "undo redo | copy cut paste | link image media" //Actions clique droit dans l'editeur
-
+    contextmenu: "undo redo | copy cut paste | link image media", //Actions clique droit dans l'editeur
+    images_upload_url: 'post.php',
+    images_reuse_filename: false
     //Pour uploader des fichiers
     //file_browser_callback: function(field_name, url, type, win) {win.document.getElementById(field_name).value = 'my browser value';}
 }) </script>
